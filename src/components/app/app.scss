@@ -3,13 +3,12 @@ body {
   overflow: hidden;
 }
 .characters-list {
+  display: flex;
+  gap: 1rem;
   flex-wrap: nowrap;
   max-width: 100%;
   min-height: 100vh;
   align-items: center;
-  list-style: none;
-  display: flex;
-  gap: 2rem;
 }
 .character {
   width: 20%;
@@ -98,10 +97,4 @@ body {
   position: absolute;
   right: 5px;
   top: 5px;
-}
-.dead {
-  transform: rotate(180deg);
-}
-.hidden {
-  display: none;
 }
