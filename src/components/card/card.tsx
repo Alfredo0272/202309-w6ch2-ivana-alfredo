@@ -1,9 +1,16 @@
+import { useCharacters } from '../../hooks/use.characters';
 import { Character } from '../../models/characters';
 
 type Props = {
   info: Character;
 };
 export function Card({ info }: Props) {
+  const { updateCharacter } = useCharacters();
+
+  const handleClickDead = (id: number) => {
+    updateCharacter(id, { isAlive: false });
+  };
+
   return (
     <li className="character col">
       <div className="card character__card">
@@ -50,7 +57,12 @@ export function Card({ info }: Props) {
             </ul>
             <div className="character__actions">
               <button className="character__action btn">habla</button>
-              <button className="character__action btn">muere</button>
+              <button
+                className="character__action btn"
+                onClick={() => handleClickDead(info.id)}
+              >
+                muere
+              </button>
             </div>
           </div>
         </div>
