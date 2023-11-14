@@ -17,15 +17,14 @@ const charactersSlice = createSlice({
       state.characters = action.payload;
       return state;
     },
-    erase: (state: CharacterState, action: PayloadAction<Character['id']>) => {
-      const erasecharacter = state.characters.findIndex(
-        (item) => item.id === action.payload
-      );
-      state.characters.splice(erasecharacter), 1;
-      return;
+    update: (state: CharacterState, { payload }: PayloadAction<Character>) => {
+      state.characters[
+        state.characters.findIndex((item) => item.id === payload.id)
+      ] = payload;
+      return state;
     },
   },
 });
 
 export default charactersSlice.reducer;
-export const { load, erase } = charactersSlice.actions;
+export const { load, update } = charactersSlice.actions;

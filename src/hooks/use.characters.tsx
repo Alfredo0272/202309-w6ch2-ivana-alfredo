@@ -3,6 +3,7 @@ import { RootState } from './../store/store';
 import { ApiRepo } from '../services/api.repo';
 import * as ac from '../slice/characters.slice';
 import { useMemo, useCallback } from 'react';
+import { Character } from '../models/characters';
 
 export function useCharacters() {
   const dispatch = useDispatch();
@@ -20,17 +21,20 @@ export function useCharacters() {
     }
   }, [dispatch, repo]);
 
-  // const eraseCharacters = useCallback(async (id: Character['id']) => {
-  //   try {
-  //      await repo.eraseCharacters();
-  //     dispatch(ac.erase(loadedCharacters.filter((item) => item.id === id )));
-  //   } catch (error) {
-  //     console.error((error as Error).message);
-  //   }
-  // }, [dispatch, repo]);
+  const updateCharacter = async (
+    id: Character['id'],
+    character: Partial<Character>
+  ) => {
+    try {
+      const updatedNote = await repo.setCharacter(id, character);
+      dispatch(ac.update(updatedNote));
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+  };
   return {
     loadCharacters,
-    // eraseCharacters,
+    updateCharacter,
     characters,
   };
 }
