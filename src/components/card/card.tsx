@@ -1,5 +1,5 @@
-import { useCharacters } from '../../hooks/use.characters';
-import { Character } from '../../models/characters';
+import { Character } from '../../model/characters';
+import { useCharacters } from '../hook/use.characters';
 
 type Props = {
   info: Character;
@@ -11,13 +11,21 @@ export function Card({ info }: Props) {
     updateCharacter(id, { isAlive: false });
   };
 
+  const handleClickSpeak = (message: string) => {
+    console.log(message);
+  };
+
   return (
     <li className="character col">
       <div className="card character__card">
         <img
-          src={`${info.name}.jpg`}
+          src={`img/${info.name}.jpg`}
           alt={info.name + ' ' + info.family}
-          className="character__picture card-img-top"
+          className={
+            info.isAlive
+              ? 'character__picture card-img-top'
+              : 'character__picture card-img-top dead'
+          }
         />
         <div className="card-body">
           <h2 className="character__name card-title h4">
@@ -56,7 +64,12 @@ export function Card({ info }: Props) {
               )}
             </ul>
             <div className="character__actions">
-              <button className="character__action btn">habla</button>
+              <button
+                className="character__action btn"
+                onClick={() => handleClickSpeak(info.message)}
+              >
+                habla
+              </button>
               <button
                 className="character__action btn"
                 onClick={() => handleClickDead(info.id)}

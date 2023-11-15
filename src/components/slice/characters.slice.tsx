@@ -1,11 +1,11 @@
+import { Character } from '../../model/characters';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Character } from '../models/characters';
 
-type CharacterState = {
+type CharactersState = {
   characters: Character[];
 };
 
-const initialState: CharacterState = {
+const initialState: CharactersState = {
   characters: [],
 };
 
@@ -13,11 +13,11 @@ const charactersSlice = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    load: (state: CharacterState, action: PayloadAction<Character[]>) => {
-      state.characters = action.payload;
+    load: (state: CharactersState, { payload }: PayloadAction<Character[]>) => {
+      state.characters = payload;
       return state;
     },
-    update: (state: CharacterState, { payload }: PayloadAction<Character>) => {
+    update: (state: CharactersState, { payload }: PayloadAction<Character>) => {
       state.characters[
         state.characters.findIndex((item) => item.id === payload.id)
       ] = payload;
@@ -25,6 +25,5 @@ const charactersSlice = createSlice({
     },
   },
 });
-
 export default charactersSlice.reducer;
 export const { load, update } = charactersSlice.actions;

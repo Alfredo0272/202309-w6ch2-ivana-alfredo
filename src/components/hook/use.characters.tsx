@@ -1,25 +1,26 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from './../store/store';
-import { ApiRepo } from '../services/api.repo';
+import { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as ac from '../slice/characters.slice';
-import { useMemo, useCallback } from 'react';
-import { Character } from '../models/characters';
+import { RootState } from '../store/characters.store';
+import { ApiRepo } from '../../services/api.repo';
+import { Character } from '../../model/characters';
 
 export function useCharacters() {
-  const dispatch = useDispatch();
-  const repo = useMemo(() => new ApiRepo(), []);
   const { characters } = useSelector(
     (state: RootState) => state.charactersState
   );
+  const dispatch = useDispatch();
+
+  const repo = useMemo(() => new ApiRepo(), []);
 
   const loadCharacters = useCallback(async () => {
     try {
       const loadedCharacters = await repo.getCharacters();
       dispatch(ac.load(loadedCharacters));
     } catch (error) {
-      console.error((error as Error).message);
+      console.log((error as Error).message);
     }
-  }, [dispatch, repo]);
+  }, [repo]);
 
   const updateCharacter = async (
     id: Character['id'],
@@ -32,9 +33,10 @@ export function useCharacters() {
       console.log((error as Error).message);
     }
   };
+
   return {
+    characters,
     loadCharacters,
     updateCharacter,
-    characters,
   };
 }

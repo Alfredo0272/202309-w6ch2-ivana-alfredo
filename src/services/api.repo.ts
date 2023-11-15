@@ -1,4 +1,4 @@
-import { Character } from '../models/characters';
+import { Character } from '../model/characters';
 
 export class ApiRepo {
   apiUrl = 'http://localhost:3000/characters';
@@ -9,6 +9,7 @@ export class ApiRepo {
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
   }
+
   async setCharacter(
     id: Character['id'],
     setCharacter: Partial<Character>
